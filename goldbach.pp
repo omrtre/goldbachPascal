@@ -35,6 +35,7 @@ begin
         end;
     end;
     Result := primes;
+    writeln(Result)
 end;
 
 
@@ -79,4 +80,5 @@ procedure main();
 // umber of lines in the file is NOT known in advance, and the end of the file signals the end of input.
 begin
     writeln('HelloWorld');
+    getPrimes(10, 11, 30, 45, 30)
 end.
