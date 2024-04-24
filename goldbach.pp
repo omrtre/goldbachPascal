@@ -8,25 +8,54 @@ uses
 
 // GetPrime
 // Is this a Prime number? Boolean is True // False
-function getPrime(num: Integer): Boolean;
-var n: Integer;
+function getPrimes(maxNumber: Integer): TArray<Integer>;
+var 
+    primes: TArray<Integer>;
+    value, prime, n: Integer;
+    isPrime: Boolean;
 begin
-
+    begin
+        isPrime := True;
+        // for 
+        begin
+            maxNumber := primes[i] 
+            if value mod prime = 0 then // This is going to determine whether it is a prime or not.
+            begin
+                isPrime := False; // If not, then break
+                Break;
+            end;
+        end;
+        if isPrime then
+            // primes.append(value) // This is going to add the primes into the array
+        begin
+            
+        end;
+    end;
+    Result := primes;
 end;
 
 
 // Goldbach
 // Find the pairs, set them up
-procedure goldBach(n: Integer; var pairCount: Integer);
+function calculateGoldBach(n: Integer; var pairCount: Integer);
 var
     a, b, c: Integer;
 begin
 
 end;
 
+// PrintGoldbach
+// Print the pairs in the desired formation
+function printGoldBach();
 
-function printGoldBach()
+// ReadFile
+// Read the files that are given
+function readFile();
 
+
+// Main
+// Run the main sofware here
+procedure main();
 
 
 // Compute for one or more input values
