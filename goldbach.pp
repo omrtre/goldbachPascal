@@ -14,11 +14,13 @@ var
     value, prime, n: Integer;
     isPrime: Boolean;
 begin
+    SetLength(primes, 0)
+    for value := 2 to maxNumber do // from the range 2 to maxNumber 
     begin
         isPrime := True;
-        // for 
+        for i := 0 to Length(primes) - 1 do // loop through this array, and loop within prime
         begin
-            maxNumber := primes[i] 
+            prime := primes[i] 
             if value mod prime = 0 then // This is going to determine whether it is a prime or not.
             begin
                 isPrime := False; // If not, then break
@@ -26,9 +28,10 @@ begin
             end;
         end;
         if isPrime then
-            // primes.append(value) // This is going to add the primes into the array
         begin
-            
+        // primes.append(value) // This is going to add the primes into the array
+            SetLength(primes, Length(primes) + 1);
+            primes[Length(primes) - 1] := value;
         end;
     end;
     Result := primes;
