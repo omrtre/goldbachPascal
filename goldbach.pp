@@ -1,26 +1,29 @@
 program Goldbach;
 
 // import sys
-uses 
-    SysUtils; 
+uses
+    SysUtils;
 
 // Create some functions to handle "gettingPrimes", "goldBach", "read n write", "printing", and "mainLoop"
 
+type
+  TArray = specialize TArray<Integer>;
+
 // GetPrime
 // Is this a Prime number? Boolean is True // False
-function getPrimes(maxNumber: Integer): TArray<Integer>;
-var 
-    primes: TArray<Integer>;
+function getPrimes(maxNumber: Integer): TArray;
+var
+    primes: array of Integer;
     value, prime, n: Integer;
     isPrime: Boolean;
 begin
-    SetLength(primes, 0)
-    for value := 2 to maxNumber do // from the range 2 to maxNumber 
+    SetLength(primes, 0);
+    for value := 2 to maxNumber do // from the range 2 to maxNumber
     begin
         isPrime := True;
-        for i := 0 to Length(primes) - 1 do // loop through this array, and loop within prime
+        for n := 0 to Length(primes) - 1 do // loop through this array, and loop within prime
         begin
-            prime := primes[i] 
+            prime := primes[n];
             if value mod prime = 0 then // This is going to determine whether it is a prime or not.
             begin
                 isPrime := False; // If not, then break
@@ -34,32 +37,31 @@ begin
             primes[Length(primes) - 1] := value;
         end;
     end;
-    Result := primes;
-    writeln(Result)
+    result := primes;
 end;
 
 
 // Goldbach
 // Find the pairs, set them up
-function calculateGoldBach(n: Integer; var pairCount: Integer);
-var
-    a, b, c: Integer;
-begin
-
-end;
+//function calculateGoldBach(n: Integer; var pairCount: Integer);
+//var
+//    a, b, c: Integer;
+//begin
+//
+//end;
 
 // PrintGoldbach
 // Print the pairs in the desired formation
-function printGoldBach();
+//function printGoldBach();
 
 // ReadFile
 // Read the files that are given
-function readFile();
+//function readFile();
 
 
 // Main
 // Run the main sofware here
-procedure main();
+//procedure main();
 
 
 // Compute for one or more input values
@@ -80,5 +82,5 @@ procedure main();
 // umber of lines in the file is NOT known in advance, and the end of the file signals the end of input.
 begin
     writeln('HelloWorld');
-    getPrimes(10, 11, 30, 45, 30)
+    getPrimes(30);
 end.
