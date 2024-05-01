@@ -90,6 +90,11 @@ var
     CloseFile(fileHandle);
 end;
 
+
+procedure Main();
+var
+
+end;
 // Goldbach
 // Find the pairs, set them up
 //function calculateGoldBach(n: Integer; var pairCount: Integer);
@@ -129,7 +134,3 @@ end;
 
 // assume that the input file contains one number per line, and those numbers ae always even integers between 4 to 100,000 (inclusive)
 // umber of lines in the file is NOT known in advance, and the end of the file signals the end of input.
-begin
-    writeln('HelloWorld');
-    getPrimes(30);
-end.
