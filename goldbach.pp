@@ -1,19 +1,21 @@
 program Goldbach;
 
+{$mode objfpc}
+
 // import sys
 uses
     SysUtils;
 
 // Create some functions to handle "gettingPrimes", "goldBach", "read n write", "printing", and "mainLoop"
-
 type
-  TArray = specialize TArray<Integer>;
+    TIntArray = array of Integer;
+
 
 // GetPrime
 // Is this a Prime number? Boolean is True // False
-function getPrimes(maxNumber: Integer): TArray;
+function getPrimes(maxNumber: Integer): TIntArray;
 var
-    primes: array of Integer;
+    primes:  array of Integer;
     value, prime, n: Integer;
     isPrime: Boolean;
 begin
@@ -37,9 +39,56 @@ begin
             primes[Length(primes) - 1] := value;
         end;
     end;
-    result := primes;
+    Result := primes;
 end;
 
+var
+    primeNumbers: array of Integer;
+    prime: Integer;
+begin
+  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
+
+  // Print the prime numbers
+    Write('Prime numbers up to 20: ');
+    for prime in primeNumbers do
+        Write(prime, ' ');
+    WriteLn;
+end.
+
+procedure PrintGoldbach(value: Integer; primeList: TIntArray<Integer>);
+var
+    prime, difference: Integer;
+begin
+    if Length(primeList) = 0 then
+        Writeln('We found no Goldbach pairs for ', value, '.')
+    else
+    begin
+        Writeln('We found ', Length(primeList), ' Goldbach pair(s) for ', value, '.');
+        for prime in primeList do
+            begin
+                difference := value - prime;
+                Writeln(value, ' = ', prime, ' + ', difference);
+            end;
+    end;
+    Writeln('');
+end;
+
+function ReadFile(const fileName: string): TIntArray<Integer>;
+var
+    fileHandle: TextFile;
+    line: string;
+    begin
+        SetLength(Result, 0);
+        AssignFile(fileHandle, fileName);
+        Reset(fileHandle);
+    while not EOF(fileHandle) do
+    begin
+        Readln(fileHandle, line);
+        SetLength(Result, Length(Result) + 1);
+        Result[Length(Result) - 1] := StrToInt(line);
+    end;
+    CloseFile(fileHandle);
+end;
 
 // Goldbach
 // Find the pairs, set them up

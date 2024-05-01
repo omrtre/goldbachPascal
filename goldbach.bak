@@ -1,19 +1,19 @@
 program Goldbach;
 
+
+{$mode objfpc}
+
 // import sys
 uses
     SysUtils;
 
 // Create some functions to handle "gettingPrimes", "goldBach", "read n write", "printing", and "mainLoop"
 
-type
-  TArray = specialize TArray<Integer>;
-
 // GetPrime
 // Is this a Prime number? Boolean is True // False
-function getPrimes(maxNumber: Integer): TArray;
+function getPrimes(maxNumber: Integer): Integer;
 var
-    primes: array of Integer;
+    primes:  array of Integer;
     value, prime, n: Integer;
     isPrime: Boolean;
 begin
@@ -37,10 +37,21 @@ begin
             primes[Length(primes) - 1] := value;
         end;
     end;
-    getPrimes := primes;
-    writeln(getPrimes);
+    Result := primes;
 end;
 
+var
+    primeNumbers: array of Integer;
+    prime: Integer;
+begin
+  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
+
+  // Print the prime numbers
+    Write('Prime numbers up to 20: ');
+    for prime in primeNumbers do
+        Write(prime, ' ');
+    WriteLn;
+end.
 
 // Goldbach
 // Find the pairs, set them up
