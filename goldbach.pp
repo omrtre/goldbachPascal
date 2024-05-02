@@ -1,6 +1,6 @@
 program Goldbach;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 // import sys
 uses
@@ -32,6 +32,7 @@ begin
                 Break;
             end;
         end;
+
         if isPrime then
         begin
         // primes.append(value) // This is going to add the primes into the array
@@ -42,20 +43,71 @@ begin
     Result := primes;
 end;
 
+// Goldbach
+// Find the pairs, set them up
+//function calculateGoldBach(n: Integer; var pairCount: Integer);
+//var
+//    a, b, c: Integer;
+//begin
+//
+//end;
+function Goldbach(value: Integer): TIntArray;
 var
-    primeNumbers: array of Integer;
-    prime: Integer;
+    primes, goldbachResult: array of Integer;
+    prime, difference, i: Integer;
+    found: Boolean;
 begin
-  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
+    SetLength(goldbachResult, 0);
+    if (value >= 4) and (value mod 2 = 0) then
+    begin
+        primes := GetPrimes(value);
+        for prime in primes do
+        begin
+            if prime > value div 2 then
+                Break;
+            difference := value - prime;
+
+            // 
+            found := False;
+            for i := 0 to Length(primes) -1 do
+            begin
+                if primes[i] = difference then
+                begin
+                    found := True;
+                    Break;
+                end;
+            end;
+
+            if found then
+            begin
+                SetLength(goldbachResult, Length(goldbachResult) + 1);
+                goldbachResult[Length(goldbachResult) - 1] := prime;
+            end;
+        end;
+    end;
+    Goldbach := goldbachResult;
+end;
+
+
+// PrintGoldbach
+// Print the pairs in the desired formation
+//function printGoldBach();
+
+//
+//var
+//    primeNumbers: array of Integer;
+//    prime: Integer;
+//begin
+//  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
 
   // Print the prime numbers
-    Write('Prime numbers up to 20: ');
-    for prime in primeNumbers do
-        Write(prime, ' ');
-    WriteLn;
-end.
+//    Write('Prime numbers up to 20: ');
+//    for prime in primeNumbers do
+//        Write(prime, ' ');
+//    WriteLn;
+//end.
 
-procedure PrintGoldbach(value: Integer; primeList: TIntArray<Integer>);
+procedure printGoldbach(value: Integer; primeList: array of Integer);
 var
     prime, difference: Integer;
 begin
@@ -73,7 +125,10 @@ begin
     Writeln('');
 end;
 
-function ReadFile(const fileName: string): TIntArray<Integer>;
+// ReadFile
+// Read the files that are given
+//function readFile();
+function readFile(const fileName: string): TIntArray;
 var
     fileHandle: TextFile;
     line: string;
@@ -90,33 +145,32 @@ var
     CloseFile(fileHandle);
 end;
 
-
-procedure Main();
-var
-
-end;
-// Goldbach
-// Find the pairs, set them up
-//function calculateGoldBach(n: Integer; var pairCount: Integer);
-//var
-//    a, b, c: Integer;
-//begin
-//
-//end;
-
-// PrintGoldbach
-// Print the pairs in the desired formation
-//function printGoldBach();
-
-// ReadFile
-// Read the files that are given
-//function readFile();
-
-
 // Main
 // Run the main sofware here
 //procedure main();
+procedure Main();
+var
+    data, primeList: array of Integer;
+    i: Integer;
+begin
+    if ParamCount > 0 then
+    begin
+        for i := 1 to ParamCount do
+            data := data + ReadFile(ParamStr(i));
+    end
+    else
+        data := [3, 4, 14, 26, 100];
 
+    for i := 0 to Length(data) - 1 do
+    begin
+        primeList := Goldbach(data[i]);
+        PrintGoldbach(data[i], primeList);
+    end;
+end;
+
+begin
+    Main()
+end.
 
 // Compute for one or more input values
 

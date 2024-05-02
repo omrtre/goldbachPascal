@@ -1,17 +1,19 @@
 program Goldbach;
 
-
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 // import sys
 uses
     SysUtils;
 
 // Create some functions to handle "gettingPrimes", "goldBach", "read n write", "printing", and "mainLoop"
+type
+    TIntArray = array of Integer;
+
 
 // GetPrime
 // Is this a Prime number? Boolean is True // False
-function getPrimes(maxNumber: Integer): Integer;
+function getPrimes(maxNumber: Integer): TIntArray;
 var
     primes:  array of Integer;
     value, prime, n: Integer;
@@ -30,6 +32,7 @@ begin
                 Break;
             end;
         end;
+
         if isPrime then
         begin
         // primes.append(value) // This is going to add the primes into the array
@@ -40,19 +43,6 @@ begin
     Result := primes;
 end;
 
-var
-    primeNumbers: array of Integer;
-    prime: Integer;
-begin
-  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
-
-  // Print the prime numbers
-    Write('Prime numbers up to 20: ');
-    for prime in primeNumbers do
-        Write(prime, ' ');
-    WriteLn;
-end.
-
 // Goldbach
 // Find the pairs, set them up
 //function calculateGoldBach(n: Integer; var pairCount: Integer);
@@ -61,20 +51,113 @@ end.
 //begin
 //
 //end;
+function Goldbach(value: Integer): TIntArray;
+var
+    primes, goldbachResult: array of Integer;
+    prime: Integer;
+begin
+    SetLength(goldbachResult, 0);
+    if (value >= 4) and (value mod 2 = 0) then
+    begin
+        primes := GetPrimes(value);
+        for prime in primes do
+        begin
+            if prime > value div 2 then
+                Break;
+            Result := value - prime;          
+            if Result in primes then
+            begin
+                SetLength(goldbachResult, Length(goldbachResult) + 1);
+                goldbachResult[Length(goldbachResult) - 1] := prime;
+            end;
+        end;
+    end;
+    Result := goldbachResult;
+end;
+
 
 // PrintGoldbach
 // Print the pairs in the desired formation
 //function printGoldBach();
 
+//
+//var
+//    primeNumbers: array of Integer;
+//    prime: Integer;
+//begin
+//  primeNumbers := GetPrimes(20); // Call GetPrimes to get prime numbers up to 20
+
+  // Print the prime numbers
+//    Write('Prime numbers up to 20: ');
+//    for prime in primeNumbers do
+//        Write(prime, ' ');
+//    WriteLn;
+//end.
+
+procedure printGoldbach(value: Integer; primeList: array of Integer);
+var
+    prime, difference: Integer;
+begin
+    if Length(primeList) = 0 then
+        Writeln('We found no Goldbach pairs for ', value, '.')
+    else
+    begin
+        Writeln('We found ', Length(primeList), ' Goldbach pair(s) for ', value, '.');
+        for prime in primeList do
+            begin
+                difference := value - prime;
+                Writeln(value, ' = ', prime, ' + ', difference);
+            end;
+    end;
+    Writeln('');
+end;
+
 // ReadFile
 // Read the files that are given
 //function readFile();
-
+function readFile(const fileName: string): TIntArray;
+var
+    fileHandle: TextFile;
+    line: string;
+    begin
+        SetLength(Result, 0);
+        AssignFile(fileHandle, fileName);
+        Reset(fileHandle);
+    while not EOF(fileHandle) do
+    begin
+        Readln(fileHandle, line);
+        SetLength(Result, Length(Result) + 1);
+        Result[Length(Result) - 1] := StrToInt(line);
+    end;
+    CloseFile(fileHandle);
+end;
 
 // Main
 // Run the main sofware here
 //procedure main();
+procedure Main();
+var
+    data, primeList: TIntArray;
+    i: Integer;
+begin
+    if ParamCount > 0 then
+    begin
+        for i := 1 to ParamCount do
+            data := data + ReadFile(ParamStr(i));
+    end
+    else
+        data := [3, 4, 14, 26, 100];
 
+    for i := 0 to Length(data) - 1 do
+    begin
+        primeList := Goldbach(data[i]);
+        PrintGoldbach(data[i], primeList);
+    end;
+end;
+
+begin
+    Main()
+end.
 
 // Compute for one or more input values
 
@@ -92,7 +175,3 @@ end.
 
 // assume that the input file contains one number per line, and those numbers ae always even integers between 4 to 100,000 (inclusive)
 // umber of lines in the file is NOT known in advance, and the end of the file signals the end of input.
-begin
-    writeln('HelloWorld');
-    getPrimes(30);
-end.
