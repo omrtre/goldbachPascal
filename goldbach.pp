@@ -67,7 +67,7 @@ begin
                 Break;
             difference := value - prime;
 
-            // 
+            // Find the difference in the array
             found := False;
             for i := 0 to Length(primes) -1 do
             begin
@@ -150,13 +150,17 @@ end;
 //procedure main();
 procedure Main();
 var
-    data, primeList: array of Integer;
+    data, primeList, fileData: array of Integer;
     i: Integer;
 begin
     if ParamCount > 0 then
     begin
         for i := 1 to ParamCount do
-            data := data + ReadFile(ParamStr(i));
+        begin
+            fileData := ReadFile(ParamStr(i));
+            SetLength(data, Length(data) + Length(fileData));
+            Move(fileData[0], data[Length(data) - Length(fileData)], Length(fileData) * SizeOf(Integer));
+        end;
     end
     else
         data := [3, 4, 14, 26, 100];
